@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"gin-xorm/dao"
@@ -14,7 +14,12 @@ type Student struct {
 // if err := dao.Db.Sync2(new(Student)); err != nil {
 // 	log.Fatalf("Fail to sync database: %v\n", err)
 // }
-func (stu *Student) AddStuModel() error {
+func (stu *Student) AddStu() error {
 	_, err := dao.Db.Insert(stu)
 	return err
+}
+
+func (stu *Student) GetStu() error {
+
+	return nil
 }

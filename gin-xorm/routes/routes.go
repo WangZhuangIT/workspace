@@ -20,5 +20,17 @@ func InitRoutes(e *gin.Engine) {
 		fmt.Println(basicConfig.HttpPort)
 		fmt.Println(basicConfig.LogLevel)
 	})
-	e.PUT("/student/", AddStuAPI)
+	//POST 		增加
+	//GET 		获取
+	//PUT 		更新
+	//DELETE 	删除
+	e.POST("/student/", AddStuAPI)
+
+	e.GET("/student/", GetStuAPI)
+	e.GET("/student/:id", AddStuAPI)
+
+	e.PUT("/student/:id", AddStuAPI)
+
+	e.DELETE("/student/", AddStuAPI)
+	e.DELETE("/student/:id", AddStuAPI)
 }
