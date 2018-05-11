@@ -11,12 +11,9 @@ type Student struct {
 	Address string `json:"Address"`
 }
 
-func init() {
-	// if err := dao.Db.Sync2(new(Student)); err != nil {
-	// 	log.Fatalf("Fail to sync database: %v\n", err)
-	// }
-}
-
+// if err := dao.Db.Sync2(new(Student)); err != nil {
+// 	log.Fatalf("Fail to sync database: %v\n", err)
+// }
 func (stu *Student) AddStuModel() error {
 	_, err := dao.Db.Insert(stu)
 	return err

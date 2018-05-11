@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	InitConfigManager()
+	InitConfigManager("config/conf")
 	InitDb()
 	gin.SetMode("debug")
 	e := gin.New()

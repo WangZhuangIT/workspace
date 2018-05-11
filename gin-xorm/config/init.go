@@ -7,8 +7,7 @@ import (
 )
 
 //初始化配置文件configManager
-func InitConfigManager() {
-	dir := "config/conf"
+func InitConfigManager(dir string) {
 	configManager.Init(dir, nil)
 	fmt.Println("初始化配置文件")
 }
