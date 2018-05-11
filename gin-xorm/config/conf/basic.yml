@@ -1,0 +1,9 @@
+#Log Level fatal:1 error:2 alert:3 warn:4 info:5 debug:6 
+logLevel:
+  6
+httpPort:
+  8081
+appid:
+  44
+ginMode:
+  release

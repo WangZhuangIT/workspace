@@ -1,0 +1,9 @@
+#客户端版本控制
+#pc学生端
+pcStudent:
+  version: "1.0" 
+  forceUpdate: false
+#pc 教师端
+pcTeacher:
+  version: "1.0" 
+  forceUpdate: false
