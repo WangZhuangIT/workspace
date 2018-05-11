@@ -2,7 +2,6 @@ package model
 
 import (
 	"gin-xorm/dao"
-	"log"
 )
 
 type Student struct {
@@ -13,9 +12,9 @@ type Student struct {
 }
 
 func init() {
-	if err := dao.Db.Sync2(new(Student)); err != nil {
-		log.Fatalf("Fail to sync database: %v\n", err)
-	}
+	// if err := dao.Db.Sync2(new(Student)); err != nil {
+	// 	log.Fatalf("Fail to sync database: %v\n", err)
+	// }
 }
 
 func (stu *Student) AddStuModel() error {
