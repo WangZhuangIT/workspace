@@ -43,4 +43,6 @@ func InitRoutes(e *gin.Engine) {
 	e.DELETE("/student/", middleware.Auth(), DelStuAPI)
 
 	e.GET("/mongo/", MongoAPI)
+
+	e.GET("/")
 }
