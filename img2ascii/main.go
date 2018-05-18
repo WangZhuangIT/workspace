@@ -16,20 +16,23 @@ import (
 //author iccboy 2017-9-2
 func main() {
 	args := os.Args //获取用户输入的所有参数
-	if args == nil || len(args) != 4 || !(args[1] == "-r" || args[1] == "-g" || args[1] == "-t") {
-		// usage()
-		// return
+	if args == nil || len(args) != 4 {
+		usage()
+		return
 	}
 	fmt.Println("...转换中...")
 	source := args[1]
-	fmt.Println(source)
-	size, _ := strconv.ParseFloat(args[2], 64)
-	dst := args[3]
+	dst := args[2]
+	size, _ := strconv.ParseFloat(args[3], 64)
 
 	tmp := resizepng(source, size)
 
 	png2ascii(tmp, dst)
 	fmt.Println("转换完成...")
+}
+
+func usage() {
+	fmt.Println("请输入参数： 源文件	目标文件	缩放比例")
 }
 
 func resizepng(file string, size float64) string {
