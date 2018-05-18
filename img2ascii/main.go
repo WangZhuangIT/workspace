@@ -3,48 +3,79 @@ package main
 import (
 	"fmt"
 	"image"
-	"image/jpeg"
+	_ "image/gif"
+	_ "image/jpeg"
 	"os"
+	"runtime"
+	"strconv"
+
+	"github.com/disintegration/imaging"
 )
 
-func ReadFrom(filename string) (image.Image, string, error) {
-	file, err := os.Open(filename)
-	if err != nil {
-		return nil, "", err
-	}
-	defer file.Close()
-	fmt.Println(file)
-	return image.Decode(file)
-}
-
-func SaveJPEG(m image.Image, name string) error {
-	file, err := os.Create(name)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-	return jpeg.Encode(file, m, &jpeg.Options{Quality: 100})
-}
-
+//该工具支持将图片色彩反转，图片灰化，图片转为字符画。
+//author iccboy 2017-9-2
 func main() {
-	_, _, err := ReadFrom("./cc.jpg")
-	if err != nil {
-		fmt.Println("ReadFrom decode err")
-		return
+	args := os.Args //获取用户输入的所有参数
+	if args == nil || len(args) != 4 || !(args[1] == "-r" || args[1] == "-g" || args[1] == "-t") {
+		// usage()
+		// return
 	}
-	// bounds := m.Bounds()
+	fmt.Println("...转换中...")
+	source := args[2]
+	size := float64(args[3])
+	dst := args[4]
 
-	// mgrey := image.NewGray(bounds)
-	// for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-	// 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
-	// 		r, g, b, _ := m.At(x, y).RGBA()
-	// 		r = r >> 8
-	// 		g = g >> 8
-	// 		b = b >> 8
-	// 		v := uint8((float32(r)*299 + float32(g)*587 + float32(b)*114) / 1000)
-	// 		mgrey.Set(x, y, color.Gray{v})
-	// 	}
-	// }
+	tmp := resizepng(source, size)
 
-	// SaveJPEG(mgrey, "./example1.jpg")
+	png2ascii(tmp, dst)
+	fmt.Println("转换完成...")
+}
+
+func resizepng(file string, size float64) string {
+	// use all CPU cores for maximum performance
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	img, err := imaging.Open(file)
+	if err != nil {
+		panic(err)
+	}
+	x := int(float64(img.Bounds().Dx()) * size)
+	y := int(float64(img.Bounds().Dy()) * size)
+	thumb := imaging.Thumbnail(img, x, y, imaging.CatmullRom)
+
+	// save the combined image to file
+	tmp := "tmp.png"
+	err = imaging.Save(thumb, tmp)
+	if err != nil {
+		panic(err)
+	}
+	return tmp
+}
+
+func png2ascii(source string, dst string) {
+	arr := []string{"M", "N", "H", "Q", "$", "O", "C", "?", "7", ">", "!", ":", "–", ";", "."}
+	ff, _ := os.Open(source)
+	m, _, _ := image.Decode(ff)
+	x := m.Bounds().Dx()
+	y := m.Bounds().Dy()
+	file, _ := os.Create(dst)
+	defer file.Close()
+	for j := 0; j < y; j += 2 {
+		for i := 0; i < x; i++ {
+			colorRgb := m.At(i, j)
+			r, g, b, _ := colorRgb.RGBA()
+			r = r & 0xFF
+			g = g & 0xFF
+			b = b & 0xFF
+			gray := 0.299*float64(r) + float64(g)*0.587 + float64(b)*0.114
+			temp := fmt.Sprintf("%.0f", gray*float64(len(arr)+1)/255)
+			index, _ := strconv.Atoi(temp)
+			if index >= len(arr) {
+				file.WriteString(" ")
+			} else {
+				file.WriteString(arr[index])
+			}
+		}
+		file.WriteString("\n")
+	}
 }
