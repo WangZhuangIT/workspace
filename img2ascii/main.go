@@ -20,25 +20,27 @@ func main() {
 		usage()
 		return
 	}
-	fmt.Println("...转换中...")
 	source := args[1]
 	dst := args[2]
 	size, _ := strconv.ParseFloat(args[3], 64)
+	if size <= 0 {
+		fmt.Println("缩放比例参数异常")
+		return
+	}
+	fmt.Println("...转换中...")
 
-	tmp := resizepng(source, size)
-
-	png2ascii(tmp, dst)
-	fmt.Println("转换完成...")
+	thumb := getThumb(source, size)
+	png2ascii(thumb, dst)
+	fmt.Println("...转换完成...")
 }
 
 func usage() {
-	fmt.Println("请输入参数： 源文件	目标文件	缩放比例")
+	fmt.Println("请输入参数：1源文件  2目标文件  3缩放比例")
 }
 
-func resizepng(file string, size float64) string {
+func getThumb(file string, size float64) *image.NRGBA {
 	// use all CPU cores for maximum performance
 	runtime.GOMAXPROCS(runtime.NumCPU())
-
 	img, err := imaging.Open(file)
 	if err != nil {
 		panic(err)
@@ -46,20 +48,11 @@ func resizepng(file string, size float64) string {
 	x := int(float64(img.Bounds().Dx()) * size)
 	y := int(float64(img.Bounds().Dy()) * size)
 	thumb := imaging.Thumbnail(img, x, y, imaging.CatmullRom)
-
-	// save the combined image to file
-	tmp := "tmp.png"
-	err = imaging.Save(thumb, tmp)
-	if err != nil {
-		panic(err)
-	}
-	return tmp
+	return thumb
 }
 
-func png2ascii(source string, dst string) {
+func png2ascii(m *image.NRGBA, dst string) {
 	arr := []string{"M", "N", "H", "Q", "$", "O", "C", "?", "7", ">", "!", ":", "–", ";", "."}
-	ff, _ := os.Open(source)
-	m, _, _ := image.Decode(ff)
 	x := m.Bounds().Dx()
 	y := m.Bounds().Dy()
 	file, _ := os.Create(dst)
