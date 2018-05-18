@@ -21,9 +21,10 @@ func main() {
 		// return
 	}
 	fmt.Println("...转换中...")
-	source := args[2]
-	size := float64(args[3])
-	dst := args[4]
+	source := args[1]
+	fmt.Println(source)
+	size, _ := strconv.ParseFloat(args[2], 64)
+	dst := args[3]
 
 	tmp := resizepng(source, size)
 
