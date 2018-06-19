@@ -1,0 +1,42 @@
+#!/bin/bash
+
+if [ "#${#@}" != "#1" ]; then
+echo "请输入版本路径:main/version.go"
+exit
+fi
+
+TOOLV=$(git rev-list HEAD | head -1)
+TOOLLOG=$(git log --pretty=format:"%s" | head -1)
+
+###########BUILD_INFO
+BUILD_DATE=$(date +%Y-%m-%d\ %H:%M)
+VERSIONFILE=$1
+AUTHOR=$(git log --pretty=format:"%an"|head -1)
+VERSION="${TOOLV}"
+
+###########GEN_INFO
+echo "package main" > $VERSIONFILE
+cat <<EOF >> $VERSIONFILE
+import (
+        "fmt"
+        "os"
+       )
+
+EOF
+echo "const (" >> $VERSIONFILE
+echo "  VERSION = \"$VERSION\"" >> $VERSIONFILE
+echo "  BUILD_DATE = \"$BUILD_DATE\"" >> $VERSIONFILE
+echo "  AUTHOR = \"$AUTHOR\"" >> $VERSIONFILE
+echo "  BUILD_INFO = \`$TOOLLOG\`" >> $VERSIONFILE
+echo ")" >> $VERSIONFILE
+
+cat <<EOF >> $VERSIONFILE
+
+func version() {
+    fmt.Fprintf(os.Stderr, "version\t%s\n", VERSION)
+    fmt.Fprintf(os.Stderr, "build\t%s\n", BUILD_DATE)
+    fmt.Fprintf(os.Stderr, "author\t%s\n", AUTHOR)
+    fmt.Fprintf(os.Stderr, "info\t%s\n", BUILD_INFO)
+}
+EOF
+

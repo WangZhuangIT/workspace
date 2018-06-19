@@ -4,6 +4,7 @@ import (
 	"fmt"
 	. "gin-xorm/api"
 	"gin-xorm/middleware"
+	"log"
 	"net/http"
 
 	configManager "git.xesv5.com/senior/lib/go/configManager"
@@ -43,6 +44,7 @@ func InitRoutes(e *gin.Engine) {
 	e.DELETE("/student/", middleware.Auth(), DelStuAPI)
 
 	e.GET("/mongo/", MongoAPI)
-
-	e.GET("/")
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 }

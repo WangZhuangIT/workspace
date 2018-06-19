@@ -1,0 +1,35 @@
+[20:40:16 CST 2018/05/15] [INFO] (flag.go:20:1) CONF	
+[20:40:16 CST 2018/05/15] [INFO] (config.go:31:1) CONF INIT	../conf/conf.ini
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /entry/test               --> go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm (1 handlers)
+Gin init
+[20:40:16 CST 2018/05/15] [INFO] (entrycontroller.go:19:1) DEBUG	"Hello World"
+http: panic serving 127.0.0.1:59339: runtime error: invalid memory address or nil pointer dereference
+goroutine 36 [running]:
+net/http.(*conn).serve.func1(0xc420130280)
+	/home/work/soft/go/src/net/http/server.go:1721 +0x183
+panic(0xe7c5a0, 0x1387c90)
+	/home/work/soft/go/src/runtime/panic.go:489 +0x2f0
+go_libs/dao/dbdao.(*StudentDao).Get(0xc420325050, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/home/work/gowork/src/go_libs/dao/dbdao/student.go:32 +0xff
+go_demo/model.(*Student).StuInfoList(0xc4200439c8, 0x5, 0xe2d120, 0xc420324ff0, 0x0, 0x0)
+	/home/work/gowork/src/go_demo/model/student.go:17 +0x6e
+go_demo/controller.(*Entry).entryTest(0x13b6af8, 0xc420270210)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:24 +0xfb
+go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm(0xc420270210)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:18 +0x4c
+github.com/gin-gonic/gin.(*Context).Next(0xc420270210)
+	/home/work/gowork/src/github.com/gin-gonic/gin/context.go:108 +0x12a
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc42024a000, 0xc420270210)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:359 +0x906
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc42024a000, 0x135ec00, 0xc420330000, 0xc420060800)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:326 +0x282
+net/http.serverHandler.ServeHTTP(0xc420246370, 0x135ec00, 0xc420330000, 0xc420060800)
+	/home/work/soft/go/src/net/http/server.go:2568 +0xbd
+net/http.(*conn).serve(0xc420130280, 0x135f900, 0xc42010f600)
+	/home/work/soft/go/src/net/http/server.go:1825 +0x71b
+created by net/http.(*Server).Serve
+	/home/work/soft/go/src/net/http/server.go:2668 +0x360

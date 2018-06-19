@@ -1,0 +1,9 @@
+[20:42:13 CST 2018/05/15] [INFO] (flag.go:20:1) CONF	
+[20:42:13 CST 2018/05/15] [INFO] (config.go:31:1) CONF INIT	../conf/conf.ini
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /entry/test               --> go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm (1 handlers)
+Gin init
+[20:42:13 CST 2018/05/15] [INFO] (entrycontroller.go:19:1) DEBUG	"Hello World"

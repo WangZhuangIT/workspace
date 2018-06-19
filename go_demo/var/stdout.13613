@@ -1,0 +1,53 @@
+[18:15:58 CST 2018/05/16] [INFO] (flag.go:20:1) CONF	
+[18:15:58 CST 2018/05/16] [INFO] (config.go:31:1) CONF INIT	../conf/conf.ini
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /entry/test               --> go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm (1 handlers)
+Gin init
+[18:15:58 CST 2018/05/16] [INFO] (entrycontroller.go:20:1) DEBUG	"Hello World"
+http: panic serving 127.0.0.1:60678: interface conversion: interface {} is []uint8, not string
+goroutine 28 [running]:
+net/http.(*conn).serve.func1(0xc4201eb9a0)
+	/home/work/soft/go/src/net/http/server.go:1721 +0x183
+panic(0xea2080, 0xc420212b40)
+	/home/work/soft/go/src/runtime/panic.go:489 +0x2f0
+go_demo/controller.(*Entry).entryTest(0x13e6df8, 0xc420318000)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:33 +0x7dc
+go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm(0xc420318000)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:19 +0x4c
+github.com/gin-gonic/gin.(*Context).Next(0xc420318000)
+	/home/work/gowork/src/github.com/gin-gonic/gin/context.go:108 +0x12a
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc420256000, 0xc420318000)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:359 +0x906
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc420256000, 0x138ece0, 0xc420242380, 0xc420068200)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:326 +0x282
+net/http.serverHandler.ServeHTTP(0xc4202522c0, 0x138ece0, 0xc420242380, 0xc420068200)
+	/home/work/soft/go/src/net/http/server.go:2568 +0xbd
+net/http.(*conn).serve(0xc4201eb9a0, 0x138f9e0, 0xc420212100)
+	/home/work/soft/go/src/net/http/server.go:1825 +0x71b
+created by net/http.(*Server).Serve
+	/home/work/soft/go/src/net/http/server.go:2668 +0x360
+http: panic serving 127.0.0.1:60682: interface conversion: interface {} is []uint8, not string
+goroutine 54 [running]:
+net/http.(*conn).serve.func1(0xc420231540)
+	/home/work/soft/go/src/net/http/server.go:1721 +0x183
+panic(0xea2080, 0xc42027af40)
+	/home/work/soft/go/src/runtime/panic.go:489 +0x2f0
+go_demo/controller.(*Entry).entryTest(0x13e6df8, 0xc4203180b0)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:33 +0x7dc
+go_demo/controller.(*Entry).(go_demo/controller.entryTest)-fm(0xc4203180b0)
+	/home/work/gowork/src/go_demo/controller/entrycontroller.go:19 +0x4c
+github.com/gin-gonic/gin.(*Context).Next(0xc4203180b0)
+	/home/work/gowork/src/github.com/gin-gonic/gin/context.go:108 +0x12a
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc420256000, 0xc4203180b0)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:359 +0x906
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc420256000, 0x138ece0, 0xc420242460, 0xc420068400)
+	/home/work/gowork/src/github.com/gin-gonic/gin/gin.go:326 +0x282
+net/http.serverHandler.ServeHTTP(0xc4202522c0, 0x138ece0, 0xc420242460, 0xc420068400)
+	/home/work/soft/go/src/net/http/server.go:2568 +0xbd
+net/http.(*conn).serve(0xc420231540, 0x138f9e0, 0xc420212c80)
+	/home/work/soft/go/src/net/http/server.go:1825 +0x71b
+created by net/http.(*Server).Serve
+	/home/work/soft/go/src/net/http/server.go:2668 +0x360

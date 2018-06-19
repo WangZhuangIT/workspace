@@ -4,6 +4,7 @@ import (
 	. "gin-xorm/config"
 	. "gin-xorm/dao"
 	. "gin-xorm/routes"
+	_ "net/http/pprof"
 
 	"github.com/gin-gonic/gin"
 )

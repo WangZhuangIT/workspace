@@ -2,40 +2,34 @@ package main
 
 import (
 	"fmt"
-	"time"
 
 	config "git.xesv5.com/senior/lib/go/configManager"
+	yaml "gopkg.in/yaml.v2"
 )
 
-func main() {
-	testUse()
+type BasicConfig struct {
+	LogLevel int    `yaml:"logLevel"`
+	HttpPort int    `yaml:"httpPort"`
+	Appid    int    `yaml:"appid"`
+	GinMode  string `yaml:"ginMode"`
 }
 
-func testUse() {
-	// 1 ETCD
-	// 2 File
-	flag := 1
+var basicConfig BasicConfig
+
+func readBasicConfig(b []byte) error {
+	err := yaml.Unmarshal(b, &basicConfig)
+	return err
+}
+
+func GetBasicConfig() BasicConfig {
+	return basicConfig
+}
+
+func main() {
+	//  1.ETCD  2.File
+	flag := 2
 	initConfig(flag)
-	go func() {
-		time.AfterFunc(time.Duration(5*time.Second), func() {
-			if flag == 1 {
-				loadEtcd()
-			} else {
-				loadFile()
-			}
-		})
-
-		time.AfterFunc(time.Duration(10*time.Second), func() {
-			if flag == 1 {
-				loadEtcd()
-			} else {
-				loadFile()
-			}
-		})
-
-	}()
-	//循环
-	select {}
+	loadFile()
 }
 
 func initConfig(flag int) {
@@ -49,18 +43,10 @@ func initConfig(flag int) {
 
 }
 
-func loadEtcd() {
-	for k, v := range config.GetConfigMap() {
-		fmt.Printf("%v : %v", k, string(v))
-	}
-}
-
 func loadFile() {
+	readBasicConfig(config.GetConfigMap()["basic.yml"])
+	fmt.Println(basicConfig)
 
-	readBasicConfig(config.GetConfigMap()["./dev/basic.yml"])
-	basicConfig := GetBasicConfig()
-	fmt.Println(basicConfig.Appid)
-	fmt.Println(basicConfig.GinMode)
-	fmt.Println(basicConfig.HttpPort)
-	fmt.Println(basicConfig.LogLevel)
+	value := string(config.GetConfigByKey("basic.yml"))
+	fmt.Println(value)
 }

@@ -12,8 +12,6 @@ import (
 	"github.com/disintegration/imaging"
 )
 
-//该工具支持将图片色彩反转，图片灰化，图片转为字符画。
-//author iccboy 2017-9-2
 func main() {
 	args := os.Args //获取用户输入的所有参数
 	if args == nil || len(args) != 4 {
